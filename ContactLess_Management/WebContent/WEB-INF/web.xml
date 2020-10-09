@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+	<display-name>ContactLess_Management</display-name>
+	<welcome-file-list>
+		<welcome-file>contact_less_mgmt.html</welcome-file>
+		<welcome-file>contact_less_mgmt.htm</welcome-file>
+		<welcome-file>contact_less_mgmt.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+	
+	<session-config>
+		<session-timeout>100</session-timeout>
+	</session-config>
+
+	<context-param>
+		<param-name>driverClass</param-name>
+		<param-value>com.mysql.jdbc.Driver</param-value>
+	</context-param>
+	<context-param>
+		<param-name>connectionString</param-name>
+		<param-value>jdbc:mysql://localhost:3306/school</param-value>
+	</context-param>
+	<context-param>
+		<param-name>db_user_name</param-name>
+		<param-value>root</param-value>
+	</context-param>
+	<context-param>
+		<param-name>db_user_password</param-name>
+		<param-value>root</param-value>
+	</context-param>	
+
+	<servlet>
+		<servlet-name>RESTful Jersey Contact Less Management</servlet-name>
+		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+		<init-param>
+			<param-name>com.sun.jersey.config.property.packages</param-name>
+			<param-value>com.apogee.contactless</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RESTful Jersey Contact Less Management</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>before_login_home</servlet-name>
+		<jsp-file>/JSP/login/contact_less_mgmt.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>before_login_home</servlet-name>
+		<url-pattern>/beforeLoginHomeView</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>LoginController</servlet-name>
+		<servlet-class>com.apogee.login.LoginController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginController</servlet-name>
+		<url-pattern>/LoginController</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>VisitAttendController</servlet-name>
+		<servlet-class>com.apogee.visitor.VisitAttendController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>VisitAttendController</servlet-name>
+		<url-pattern>/VisitAttendController</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>visitors_attendance</servlet-name>
+		<jsp-file>/JSP/visitors/visitors_attendance.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>visitors_attendance</servlet-name>
+		<url-pattern>/visitors_attendance</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>VisitDetailsController</servlet-name>
+		<servlet-class>com.apogee.visitor.VisitDetailsController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>VisitDetailsController</servlet-name>
+		<url-pattern>/VisitDetailsController</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>visitors_details</servlet-name>
+		<jsp-file>/JSP/visitors/visitors_details.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>visitors_details</servlet-name>
+		<url-pattern>/visitors_details</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>PoliciesController</servlet-name>
+		<servlet-class>com.apogee.policies.PoliciesController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PoliciesController</servlet-name>
+		<url-pattern>/PoliciesController</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>policies_details</servlet-name>
+		<jsp-file>/JSP/policies/policies_details.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>policies_details</servlet-name>
+		<url-pattern>/policies_details</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>VisitTempDetailsController</servlet-name>
+		<servlet-class>com.apogee.visitor.VisitTempDetailsController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>VisitTempDetailsController</servlet-name>
+		<url-pattern>/VisitTempDetailsController</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>temperature_log</servlet-name>
+		<jsp-file>/temperature_log.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>temperature_log</servlet-name>
+		<url-pattern>/temperature_log</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>AttendanceController</servlet-name>
+		<servlet-class>com.apogee.visitor.AttendanceController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AttendanceController</servlet-name>
+		<url-pattern>/AttendanceController</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>attendance_report</servlet-name>
+		<jsp-file>/attendance_report.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>attendance_report</servlet-name>
+		<url-pattern>/attendance_report</url-pattern>
+	</servlet-mapping>
+
+	
+	<servlet>
+		<servlet-name>DeviceRegController</servlet-name>
+		<servlet-class>com.apogee.visitor.DeviceRegController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DeviceRegController</servlet-name>
+		<url-pattern>/DeviceRegController</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>rfid_allocation</servlet-name>
+		<jsp-file>/rfid_allocation.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>rfid_allocation</servlet-name>
+		<url-pattern>/rfid_allocation</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>temperature_log_mob</servlet-name>
+		<jsp-file>/temp_log_mobview.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>temperature_log_mob</servlet-name>
+		<url-pattern>/temperature_log_mob</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>nav_bar</servlet-name>
+		<jsp-file>/JSP/visitors/nav_bar.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>nav_bar</servlet-name>
+		<url-pattern>/nav_bar</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>DeviceInfoRegController</servlet-name>
+		<servlet-class>com.apogee.visitor.DeviceInfoRegController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DeviceInfoRegController</servlet-name>
+		<url-pattern>/DeviceInfoRegController</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>device_info_reg</servlet-name>
+		<jsp-file>/JSP/visitors/device_info_reg.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>device_info_reg</servlet-name>
+		<url-pattern>/device_info_reg</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>TempDashController</servlet-name>
+		<servlet-class>com.apogee.visitor.TempDashController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TempDashController</servlet-name>
+		<url-pattern>/TempDashController</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>temp_dash</servlet-name>
+		<jsp-file>/JSP/visitors/temp_dash.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>temp_dash</servlet-name>
+		<url-pattern>/temp_dash</url-pattern>
+	</servlet-mapping>
+	
+
+</web-app>
