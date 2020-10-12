@@ -74,28 +74,27 @@ public class AttendanceReportModel {
 		}
 		return reportInbytes;
 	}
-	
-	
+
 	// pdf
-	public static  ByteArrayOutputStream generateOrginisationXlsRecordList(String jrxmlFilePath,List list) {
-        ByteArrayOutputStream bytArray = new ByteArrayOutputStream();
-      //  HashMap mymap = new HashMap();
-        try {
-        	System.out.println("list     "+list);
-            JRBeanCollectionDataSource jrBean=new JRBeanCollectionDataSource(list);
-            JasperReport compiledReport = JasperCompileManager.compileReport(jrxmlFilePath);
-            System.out.println("compiledReport     "+compiledReport);
-            JasperPrint jasperPrint = JasperFillManager.fillReport(compiledReport, null, jrBean);
-            System.out.println("compiledReport     "+compiledReport);
-            JRXlsxExporter exporter = new JRXlsxExporter();
-            exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-            exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, bytArray);
-            exporter.exportReport();
-        } catch (Exception e) {
-            System.out.println("OrginisationTypeStatusModel generateOrgnisitionXlsRecordList() JRException: " + e);
-        }
-        return bytArray;
-    }
+	public static ByteArrayOutputStream generateOrginisationXlsRecordList(String jrxmlFilePath, List list) {
+		ByteArrayOutputStream bytArray = new ByteArrayOutputStream();
+		// HashMap mymap = new HashMap();
+		try {
+			System.out.println("list     " + list);
+			JRBeanCollectionDataSource jrBean = new JRBeanCollectionDataSource(list);
+			JasperReport compiledReport = JasperCompileManager.compileReport(jrxmlFilePath);
+			System.out.println("compiledReport     " + compiledReport);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(compiledReport, null, jrBean);
+			System.out.println("compiledReport     " + compiledReport);
+			JRXlsxExporter exporter = new JRXlsxExporter();
+			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, bytArray);
+			exporter.exportReport();
+		} catch (Exception e) {
+			System.out.println("OrginisationTypeStatusModel generateOrgnisitionXlsRecordList() JRException: " + e);
+		}
+		return bytArray;
+	}
 	// end pdf
 
 	// report
@@ -270,7 +269,7 @@ public class AttendanceReportModel {
 
 	public static List<VisitAttendBean> showDataForTempLog2(String login_office, int login_office_id,
 			String designation_id, String class_enroll, String class_name, String section, String name,
-			String enroll_no, String from_date, String to_date, String period) {
+			String enroll_no, String from_date, String to_date, String period, String temp_type) {
 		List list = new ArrayList();
 		int countSlight = 0, countHigh = 0, countNormal = 0, countLow = 0, totalCount = 0;
 		if (class_enroll == null) {
@@ -297,6 +296,9 @@ public class AttendanceReportModel {
 		if (period == null) {
 			period = "";
 		}
+		if (temp_type == null) {
+			temp_type = "";
+		}
 
 		try {
 			String query = " select distinct kp.key_person_name,ddt.device_temperature, ddt.device_data_datetime, ddt.image_path "
@@ -322,6 +324,21 @@ public class AttendanceReportModel {
 			}
 			if (from_date != "" && to_date == "") {
 				query += " and date(ddt.created_date) between '" + from_date + "' and now() ";
+			}
+			if (temp_type != "") {							
+
+				if (temp_type.equals("Normal")) {
+					query+=" and ddt.device_temperature > 90 and ddt.device_temperature <= 98 "; 
+				}
+				if (temp_type.equals("Low")) {
+					query+=" and ddt.device_temperature <= 90 ";
+				}
+				if (temp_type.equals("Slight")) {
+					query+=" and ddt.device_temperature > 98 and ddt.device_temperature <= 100 ";
+				}
+				if (temp_type.equals("High")) {
+					query+=" and ddt.device_temperature > 100  ";
+				}
 			}
 
 			query += " order by ddt.device_data_datetime desc ";
@@ -409,7 +426,7 @@ public class AttendanceReportModel {
 
 	public static List<VisitAttendBean> showFilterData(String login_office, int login_office_id, String designation_id,
 			String class_enroll, String class_name, String section, String name, String enroll_no, String from_date,
-			String to_date, String period) {
+			String to_date, String period, String temp_type) {
 		List list = new ArrayList();
 
 		if (class_enroll == null) {
@@ -436,6 +453,9 @@ public class AttendanceReportModel {
 		if (period == null) {
 			period = "";
 		}
+		if (temp_type == null) {
+			temp_type = "";
+		}		
 
 		try {
 			String query = " select distinct kp.key_person_name,ddt.device_temperature, ddt.device_data_datetime, ddt.image_path "
@@ -447,7 +467,7 @@ public class AttendanceReportModel {
 				query += " and d.designation_id=kp.designation_id and d.designation='" + designation_id + "' ";
 			}
 
-			if (section.equals("ALL")) {			
+			if (section.equals("ALL")) {
 				query += " and d.designation_id=kp.designation_id and d.designation='" + designation_id + "' ";
 
 			}
@@ -461,6 +481,21 @@ public class AttendanceReportModel {
 			}
 			if (from_date != "" && to_date == "") {
 				query += " and date(ddt.created_date) between '" + from_date + "' and now() ";
+			}
+			if (temp_type != "") {						
+
+				if (temp_type.equals("Normal")) {
+					query+=" and ddt.device_temperature > 90 and ddt.device_temperature <= 98 "; 
+				}
+				if (temp_type.equals("Low")) {
+					query+=" and ddt.device_temperature <= 90 ";
+				}
+				if (temp_type.equals("Slight")) {
+					query+=" and ddt.device_temperature > 98 and ddt.device_temperature <= 100 ";
+				}
+				if (temp_type.equals("High")) {
+					query+=" and ddt.device_temperature > 100  ";
+				}
 			}
 
 			query += " order by ddt.device_data_datetime desc ";
@@ -485,13 +520,13 @@ public class AttendanceReportModel {
 				bean.setLogin_office(login_office);
 
 				// System.out.println("temppp ---"+bean.getTemperature());
-				if (bean.getTemperature() > 98 && bean.getTemperature() < 100) {
+				if (bean.getTemperature() > 98 && bean.getTemperature() <= 100) {
 					bean.setStatus("Slight Fever");
-				} else if (bean.getTemperature() < 90) {
+				} else if (bean.getTemperature() <= 90) {
 					bean.setStatus("Low");
 				} else if (bean.getTemperature() > 100) {
 					bean.setStatus("High Fever");
-				} else if (bean.getTemperature() > 90 && bean.getTemperature() < 98) {
+				} else if (bean.getTemperature() > 90 && bean.getTemperature() <= 98) {
 					bean.setStatus("Normal");
 				}
 

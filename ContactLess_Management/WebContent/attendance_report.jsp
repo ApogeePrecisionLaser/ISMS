@@ -473,32 +473,30 @@ label {
 						<option value="yearly">Yearly</option>
 					</select>
 				</div>
-
-				<%-- <div class="col-md-2">
-					<label>Period</label> <select class="form-control" type="text"
-						id="period" name="period" value="${period }">
+				
+				<div class="col-md-2">
+					<label>Temperature</label> <select class="form-control" type="text"
+						id="temp_type" name="temp_type" value="${temp_type }"
+						onchange="showButton(this.value);">
 						<option></option>
-						<c:forEach var="party" items="${list3}">
-							<option value="${party}">
-								${party}
-							</option>
-						</c:forEach>
-
+						<c:if test="${not empty temp_type}">
+							<option value="${temp_type }" selected>${temp_type }</option>
+						</c:if>
+						<option value="Normal">Normal</option>
+						<option value="Low">Low</option>
+						<option value="Slight">Slight</option>
+						<option value="High">High</option>						
 					</select>
-				</div> --%>
-
-				<div class="col-md-2" style="margin-top: 25px;">
-					<input type="submit" value="Submit" id="btn_submit" name="task"
-						class="btn btn-primary" disabled>
 				</div>
 
-				<div class="col-md-2" style="margin-top: 25px;">
+				<div class="col-md-4" style="margin-top: 25px;">
+				<input type="submit" value="Submit" id="btn_submit" name="task"
+						class="btn btn-primary" disabled>
+				
 					<input class="btn btn-primary" type="button" name="viewPdf"
 						id="viewPdf" value="Generate PDF" onclick="displayMapList(id)">
-				</div>
-
-				<div class="col-md-2" style="margin-top: 25px;">
-					<input class="btn btn-primary" type="button" name="viewXLS"
+						
+						<input class="btn btn-primary" type="button" name="viewXLS"
 						id="viewXLS" value="Generate Excel" onclick="displayMapList(id)">
 				</div>
 
@@ -729,16 +727,17 @@ label {
 			var from_date=$('#from_date').val();
 			var to_date=$('#to_date').val();
 			var period=$('#period').val();
+			var temp_type=$('#temp_type').val();
 									
 	            if (id === 'viewPdf'){	            		            	
 	                queryString = "requester=PRINT" + "&designation_id=" +designation_id + "&class_enroll=" 
 	                +class_enroll +"&class_name="+class_name+"&section="+section+"&name="+name+"&enroll_no="+enroll_no+"&from_date="+from_date+
-	                "&to_date="+to_date+"&period="+period;
+	                "&to_date="+to_date+"&period="+period+"&temp_type="+temp_type;
 	            }
 	            if (id === 'viewXLS'){	            		            	
 	                queryString = "requester=PRINTXls" + "&designation_id=" +designation_id + "&class_enroll=" 
 	                +class_enroll +"&class_name="+class_name+"&section="+section+"&name="+name+"&enroll_no="+enroll_no+"&from_date="+from_date+
-	                "&to_date="+to_date+"&period="+period;
+	                "&to_date="+to_date+"&period="+period+"&temp_type="+temp_type;
 	            }
 	           
 	            var url = "AttendanceController?" + queryString;

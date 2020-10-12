@@ -165,7 +165,7 @@ public class AttendanceController extends HttpServlet {
 
 		String dataShow = "No";
 		String designation_id = "", class_enroll = "", class_name = "", section = "", name = "", enroll_no = "",
-				from_date = "", to_date = "", period = "";
+				from_date = "", to_date = "", period = "",temp_type="";
 
 		if (task.equals("Submit")) {
 			designation_id = request.getParameter("designation_id");
@@ -177,12 +177,13 @@ public class AttendanceController extends HttpServlet {
 			from_date = request.getParameter("from_date");
 			to_date = request.getParameter("to_date");
 			period = request.getParameter("period");
+			temp_type = request.getParameter("temp_type");
 			dataShow = "Yes";
 		}
 		session.setAttribute("dataShow", dataShow);
 
 		System.out.println("dd -" + designation_id + "en -" + class_enroll + " cn- " + class_name + " s -" + section
-				+ " n -" + name + " e -" + enroll_no + " f - " + from_date + " t -" + to_date);
+				+ " n -" + name + " e -" + enroll_no + " f - " + from_date + " t -" + to_date+" tempType -"+temp_type);
 
 		// report
 
@@ -199,6 +200,7 @@ public class AttendanceController extends HttpServlet {
 			from_date = request.getParameter("from_date");
 			to_date = request.getParameter("to_date");
 			period = request.getParameter("period");
+			temp_type = request.getParameter("temp_type");
 			
 			List listAll = null;
 			String jrxmlFilePath;
@@ -207,11 +209,11 @@ public class AttendanceController extends HttpServlet {
 			// listAll = AttendanceReportModel.showDataReport(login_office,
 			// login_office_id);
 			
-			System.out.println("dd -" + designation_id + "en -" + class_enroll + " cn- " + class_name + " s -" + section
-					+ " n -" + name + " e -" + enroll_no + " f - " + from_date + " t -" + to_date);
+			/*System.out.println("dd -" + designation_id + "en -" + class_enroll + " cn- " + class_name + " s -" + section
+					+ " n -" + name + " e -" + enroll_no + " f - " + from_date + " t -" + to_date);*/
 			
 			listAll = AttendanceReportModel.showFilterData(login_office, login_office_id, designation_id, class_enroll,
-					class_name, section, name, enroll_no, from_date, to_date, period);
+					class_name, section, name, enroll_no, from_date, to_date, period,temp_type);
 			jrxmlFilePath = ctx.getRealPath("/report/Cherry.jrxml");
 			byte[] reportInbytes = AttendanceReportModel.generateSiteList(jrxmlFilePath, listAll);
 			// System.out.println("reportInbytes"+reportInbytes);
@@ -234,19 +236,17 @@ public class AttendanceController extends HttpServlet {
 			from_date = request.getParameter("from_date");
 			to_date = request.getParameter("to_date");
 			period = request.getParameter("period");
+			temp_type = request.getParameter("temp_type");
 			
-            String jrxmlFilePath = null;
-            System.out.println("requester --"+requester);
+            String jrxmlFilePath = null;            
             List listAll = null;
             response.setContentType("application/vnd.ms-excel");
             response.addHeader("Content-Disposition", "attachment; filename=city.xls");
             ServletOutputStream servletOutputStream = response.getOutputStream();
             //listAll=sm.showDataReport(login_office,login_office_id);
             listAll = AttendanceReportModel.showFilterData(login_office, login_office_id, designation_id, class_enroll,
-					class_name, section, name, enroll_no, from_date, to_date, period);
-            System.out.println("login_office_id"+listAll.size());
-            jrxmlFilePath = ctx.getRealPath("/report/Cherry.jrxml");
-            System.out.println("jrxmlFilePath 12121212   "+jrxmlFilePath);
+					class_name, section, name, enroll_no, from_date, to_date, period, temp_type);            
+            jrxmlFilePath = ctx.getRealPath("/report/Cherry.jrxml");            
             ByteArrayOutputStream reportInbytes = AttendanceReportModel.generateOrginisationXlsRecordList(jrxmlFilePath, listAll);
             response.setContentLength(reportInbytes.size());
             servletOutputStream.write(reportInbytes.toByteArray());
@@ -266,10 +266,10 @@ public class AttendanceController extends HttpServlet {
 			}
 
 			List<VisitAttendBean> list = AttendanceReportModel.showFilterData(login_office, login_office_id,
-					designation_id, class_enroll, class_name, section, name, enroll_no, from_date, to_date, period);
+					designation_id, class_enroll, class_name, section, name, enroll_no, from_date, to_date, period, temp_type);
 
 			List<VisitAttendBean> list2 = AttendanceReportModel.showDataForTempLog2(login_office, login_office_id,
-					designation_id, class_enroll, class_name, section, name, enroll_no, from_date, to_date, period);
+					designation_id, class_enroll, class_name, section, name, enroll_no, from_date, to_date, period, temp_type);
 
 			int normal = 0, low = 0, high = 0, slight = 0, total = 0;
 			for (int i = 0; i < list2.size(); i++) {
@@ -307,6 +307,7 @@ public class AttendanceController extends HttpServlet {
 			request.setAttribute("from_date", from_date);
 			request.setAttribute("to_date", to_date);
 			request.setAttribute("period", period);
+			request.setAttribute("temp_type", temp_type);
 
 			request.setAttribute("message", arm.getMessage());
 			request.setAttribute("color", arm.getMsgBgColor());

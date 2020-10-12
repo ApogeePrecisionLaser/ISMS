@@ -12,7 +12,7 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
-	
+
 	<session-config>
 		<session-timeout>100</session-timeout>
 	</session-config>
@@ -32,7 +32,7 @@
 	<context-param>
 		<param-name>db_user_password</param-name>
 		<param-value>root</param-value>
-	</context-param>	
+	</context-param>
 
 	<servlet>
 		<servlet-name>RESTful Jersey Contact Less Management</servlet-name>
@@ -47,6 +47,12 @@
 		<servlet-name>RESTful Jersey Contact Less Management</servlet-name>
 		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
+
+	<listener>
+    	<listener-class>
+    		com.apogee.sms.CheckHighTemperature
+    	</listener-class>
+	</listener>
 
 	<servlet>
 		<servlet-name>before_login_home</servlet-name>
@@ -138,8 +144,8 @@
 		<servlet-name>temperature_log</servlet-name>
 		<url-pattern>/temperature_log</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 	<servlet>
 		<servlet-name>AttendanceController</servlet-name>
 		<servlet-class>com.apogee.visitor.AttendanceController</servlet-class>
@@ -158,7 +164,7 @@
 		<url-pattern>/attendance_report</url-pattern>
 	</servlet-mapping>
 
-	
+
 	<servlet>
 		<servlet-name>DeviceRegController</servlet-name>
 		<servlet-class>com.apogee.visitor.DeviceRegController</servlet-class>
@@ -194,7 +200,7 @@
 		<servlet-name>nav_bar</servlet-name>
 		<url-pattern>/nav_bar</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>DeviceInfoRegController</servlet-name>
 		<servlet-class>com.apogee.visitor.DeviceInfoRegController</servlet-class>
@@ -212,7 +218,7 @@
 		<servlet-name>device_info_reg</servlet-name>
 		<url-pattern>/device_info_reg</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>TempDashController</servlet-name>
 		<servlet-class>com.apogee.visitor.TempDashController</servlet-class>
@@ -230,6 +236,6 @@
 		<servlet-name>temp_dash</servlet-name>
 		<url-pattern>/temp_dash</url-pattern>
 	</servlet-mapping>
-	
+
 
 </web-app>

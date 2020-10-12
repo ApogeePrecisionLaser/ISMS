@@ -91,6 +91,10 @@
 .row {
 	margin-right: 0px;
 }
+
+#my_image{
+transform: rotate(90deg);
+}
 </style>
 
 <script>
